@@ -6,6 +6,7 @@ function AddProduct() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -31,11 +32,12 @@ function AddProduct() {
 
       if (result.success) {
         setMessage("Product Added Successfully!");
+        reset();
       } else {
-        setMessage("Failed to add product!");
+        setMessage(result.message);
       }
 
-      setTimeout(() => setMessage(""), 3000);
+      setTimeout(() => setMessage(""), 1500);
     } catch (err) {
       setMessage(" Server error");
       console.log(err);
@@ -75,7 +77,7 @@ function AddProduct() {
           })}
         />
         {errors.sellingPrice && <p>{errors.sellingPrice.message}</p>}
-        {message && <p style={{ color: "green" }}>{message}</p>}
+        {message && <p style={{ color: "black" }}>{message}</p>}
 
         <button className="add-btn" type="submit">
           Add Product

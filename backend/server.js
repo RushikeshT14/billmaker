@@ -10,10 +10,12 @@ const auth = require("./Middleware/authMiddleware.js");
 const cookieParser = require("cookie-parser");
 
 const app = express();
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(express.json());
 
@@ -82,38 +84,80 @@ app.post("/logout", (req, res) => {
   return res.json({ success: true, message: "Logged out successfully" });
 });
 
-
-
-
 // -----------------------------------------------------------------Product-------------
 
-app.post("/addproduct", auth, async(req, res) => {
-  const {productName,category,MRP,sellingPrice} =req.body;
-  try{
-    const newProduct =new Product({productName,category,MRP,sellingPrice});
-    await newProduct.save();
-    res.json({success: true,message: "Product addded"});
-  }catch(err){
-    console.error(err);
-    res.json({ success: false, message: "Error while adding product." });
+app.get("/products", auth, async (req, res) => {
+  try {
+    const products = await Product.find({});
+    // console.log(products);
+    res.json({
+      success: true,
+      message: "Data Found",
+      products,
+    });
+  } catch (error) {
+    res.json({ success: false, message: "Server Error" });
   }
 });
 
+app.post("/addproduct", auth, async (req, res) => {
+  const { productName, category, MRP, sellingPrice } = req.body;
+  const name = productName.trim().toLowerCase();
+  try {
+    const existingProduct = await Product.findOne({ productName: name });
+    if (existingProduct) {
+      return res.json({
+        success: false,
+        message: "Product already Exist.",
+      });
+    }
+    const newProduct = new Product({
+      productName: name,
+      category,
+      MRP,
+      sellingPrice,
+    });
+    await newProduct.save();
+    return res.json({ success: true, message: "Product addded" });
+  } catch (err) {
+    console.error(err);
+    return res.json({ success: false, message: "Error while adding product." });
+  }
+});
 
-
-
-
-
-
-
-
+app.put("/editproduct/:id", auth, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const editProduct = await Product.findById(id);
+    if (!editProduct) {
+      return res.json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+    
+    editProduct.productName = req.body.productName || editProduct.productName;
+    editProduct.category = req.body.category || editProduct.category;
+    editProduct.MRP = req.body.MRP || editProduct.MRP;
+    editProduct.sellingPrice =
+    req.body.sellingPrice || editProduct.sellingPrice;
+    
+    await editProduct.save();
+    // console.log(editProduct);
+    return res.json({
+      success: true,
+      message: "Product information updated successfully",
+      product: editProduct,
+    });
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false, message: "Server error" });
+  }
+});
 
 app.get("/checkauth", auth, (req, res) => {
   res.json({ success: true, user: req.user });
 });
-
-
-
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");

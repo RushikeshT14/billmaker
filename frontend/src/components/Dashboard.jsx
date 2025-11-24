@@ -47,10 +47,11 @@ function Dashboard() {
         <h2 className="sidebar-title">Admin Panel</h2>
 
         <ul className="sidebar-links">
-          <li><Link to="billing"><i class="fa-solid fa-arrow-right"></i>     Billing </Link></li>
-          <li><Link to="addproduct"><i class="fa-solid fa-arrow-right"></i>     Add Product </Link></li>
-          <li><Link to="editproduct"><i class="fa-solid fa-arrow-right"></i>     Edit Product </Link></li>
-          <li><Link to="billhistory"><i class="fa-solid fa-arrow-right"></i>     Bill History </Link></li>
+          <li><Link to="allproduct"><i className="fa-solid fa-arrow-right"></i>     Products </Link></li>
+          <li><Link to="addproduct"><i className="fa-solid fa-arrow-right"></i>     Add Product </Link></li>
+          {/* <li><Link to="editproduct"><i className="fa-solid fa-arrow-right"></i>     Edit Product </Link></li> */}
+          <li><Link to="billing"><i className="fa-solid fa-arrow-right"></i>     Billing </Link></li> 
+          <li><Link to="billhistory"><i className="fa-solid fa-arrow-right"></i>     Bill History </Link></li>
         </ul>
       </aside>
 
