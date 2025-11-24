@@ -4,13 +4,11 @@ const auth = (req, res, next) => {
   const token = req.cookies.token;
 
   if (!token) {
-    return res
-      .staus(401)
-      .json({
-        success: false,
-        error: "no toker",
-        message: "Authentication token missing",
-      });
+    return res.status(401).json({
+      success: false,
+      error: "NoToken",
+      message: "Authentication token missing",
+    });
   }
 
   try {
@@ -34,7 +32,6 @@ const auth = (req, res, next) => {
       });
     }
 
-    // Unexpected error
     return res.status(500).json({
       success: false,
       error: "ServerError",

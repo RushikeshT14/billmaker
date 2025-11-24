@@ -23,7 +23,7 @@ function Dashboard() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("http://localhost:3000/", {
+        const res = await fetch("http://localhost:3000/checkauth", {
           credentials: "include",
         });
 
@@ -47,18 +47,10 @@ function Dashboard() {
         <h2 className="sidebar-title">Admin Panel</h2>
 
         <ul className="sidebar-links">
-          <li>
-            <Link to="billing"><i class="fa-solid fa-money-bill"></i> Billing</Link>
-          </li>
-          <li>
-            <Link to="addproduct"><i class="fa-solid fa-plus"></i> Add Product</Link>
-          </li>
-          <li>
-            <Link to="editproduct"><i class="fa-regular fa-pen-to-square"></i> Edit Product</Link>
-          </li>
-          <li>
-            <Link to="billhistory"><i class="fa-solid fa-clock-rotate-left"></i> Bill History</Link>
-          </li>
+          <li><Link to="billing"><i class="fa-solid fa-arrow-right"></i>     Billing </Link></li>
+          <li><Link to="addproduct"><i class="fa-solid fa-arrow-right"></i>     Add Product </Link></li>
+          <li><Link to="editproduct"><i class="fa-solid fa-arrow-right"></i>     Edit Product </Link></li>
+          <li><Link to="billhistory"><i class="fa-solid fa-arrow-right"></i>     Bill History </Link></li>
         </ul>
       </aside>
 

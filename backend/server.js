@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const User = require("./Schemas/AdminSchema.js");
+const Product = require("./Schemas/ProdectSchema.js");
 const jwt = require("jsonwebtoken");
 const auth = require("./Middleware/authMiddleware.js");
 const cookieParser = require("cookie-parser");
@@ -11,7 +12,6 @@ const cookieParser = require("cookie-parser");
 const app = express();
 app.use(cors({
   origin: "http://localhost:5173",
-  // origin:true,
   credentials: true,
 }));
 app.use(cookieParser());
@@ -83,13 +83,37 @@ app.post("/logout", (req, res) => {
 });
 
 
-app.get("/", auth, (req, res) => {
-  res.json({
-    success: true,
-    message: "This is a protected route",
-    user: req.user,
-  });
+
+
+// -----------------------------------------------------------------Product-------------
+
+app.post("/addproduct", auth, async(req, res) => {
+  const {productName,category,MRP,sellingPrice} =req.body;
+  try{
+    const newProduct =new Product({productName,category,MRP,sellingPrice});
+    await newProduct.save();
+    res.json({success: true,message: "Product addded"});
+  }catch(err){
+    console.error(err);
+    res.json({ success: false, message: "Error while adding product." });
+  }
 });
+
+
+
+
+
+
+
+
+
+
+app.get("/checkauth", auth, (req, res) => {
+  res.json({ success: true, user: req.user });
+});
+
+
+
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
