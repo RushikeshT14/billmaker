@@ -135,13 +135,13 @@ app.put("/editproduct/:id", auth, async (req, res) => {
         message: "Product not found",
       });
     }
-    
+
     editProduct.productName = req.body.productName || editProduct.productName;
     editProduct.category = req.body.category || editProduct.category;
     editProduct.MRP = req.body.MRP || editProduct.MRP;
     editProduct.sellingPrice =
-    req.body.sellingPrice || editProduct.sellingPrice;
-    
+      req.body.sellingPrice || editProduct.sellingPrice;
+
     await editProduct.save();
     // console.log(editProduct);
     return res.json({
@@ -151,6 +151,27 @@ app.put("/editproduct/:id", auth, async (req, res) => {
     });
   } catch (err) {
     console.error(err);
+    res.json({ success: false, message: "Server error" });
+  }
+});
+
+app.delete("/products/:id", auth, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deleteProduct = await Product.findByIdAndDelete(id);
+    if (!deleteProduct) {
+      return res.json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+    // console.log(deleteProduct);
+    return res.json({
+      success: true,
+      message: "Product Deleted",
+    });
+  } catch (err) {
+    console.log(err);
     res.json({ success: false, message: "Server error" });
   }
 });

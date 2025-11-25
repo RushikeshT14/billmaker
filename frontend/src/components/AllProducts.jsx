@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function AllProducts() {
   const [products, setProducts] = useState([]);
+  const [deleteMsg, setDeleteMsg] = useState("");
   const navigate = useNavigate();
 
   const editProduct = (product) => {
@@ -23,7 +24,7 @@ function AllProducts() {
 
         const data = await res.json();
 
-        if (!data.success){
+        if (!data.success) {
           console.log("Unauthorized");
           return;
         }
@@ -37,8 +38,40 @@ function AllProducts() {
     fetchProducts();
   }, []);
 
+  const deleteProduct = async (product) => {
+    if (
+      !window.confirm(`Do you want to delete product: ${product.productName}?`)
+    ) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:3000/products/${product._id}`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const response = await res.json();
+
+      if (response.success) {
+        setDeleteMsg("Product Deleted Successfully");
+        setTimeout(() => setDeleteMsg(""), 2000);
+        setProducts((prev) => prev.filter((p) => p._id !== product._id));
+      } else {
+        setDeleteMsg("Failed to delete product");
+        setTimeout(() => setDeleteMsg(""), 2000);
+      }
+    } catch (err) {
+      console.log("Delete error:", err);
+    }
+  };
+
   return (
     <div className="all-products-container">
+      {deleteMsg && <span className="delete-message" style={{color:"#189595ff",fontSize:"15px"}}>{deleteMsg}</span>}
       <h2 className="title">All Products</h2>
 
       {products.length > 0 ? (
@@ -66,7 +99,7 @@ function AllProducts() {
 
                   <button
                     className="delete-btn"
-                    onClick={() => console.log("Delete", p._id)}
+                    onClick={() => deleteProduct(p)}
                   >
                     Delete
                   </button>
