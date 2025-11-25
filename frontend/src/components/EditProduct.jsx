@@ -1,64 +1,60 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "../CSS/AddProduct.css";
 
 function EditProduct() {
-  const { state: product } = useLocation();
+  const { id } = useParams();
   const navigate = useNavigate();
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
-
   const [message, setMessage] = useState("");
 
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/");
-    }
-    if (product) {
-      reset({
-        productName: product.productName,
-        category: product.category,
-        MRP: product.MRP,
-        sellingPrice: product.sellingPrice,
-      });
-    }
-  }, [product, reset]);
-
-  const onSubmit = async (data) => {
-    try {
-      const res = await fetch(
-        `http://localhost:3000/editproduct/${product._id}`,
-        {
-          method: "PUT",
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/products/${id}`, {
           credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+        });
+        const data = await res.json();
 
+        if (data.success) {
+          reset({
+            productName: data.product.productName,
+            category: data.product.category,
+            MRP: data.product.MRP,
+            sellingPrice: data.product.sellingPrice,
+          });
+        } else {
+          navigate("/dashboard/allproduct");
+        }
+      } catch (err) {
+        console.error(err);
+        navigate("/dashboard/allproduct");
+      }
+    };
+
+    fetchProduct();
+  }, [id, reset, navigate]);
+
+  const onSubmit = async (formData) => {
+    try {
+      const res = await fetch(`http://localhost:3000/products/${id}`, {
+        method: "PUT",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
       const result = await res.json();
 
       if (result.success) {
         setMessage("Product Updated Successfully!");
-
-        setTimeout(() => {
-          setMessage("");
-          navigate("/dashboard/allproduct");
-        }, 1500);
+        setTimeout(() => navigate("/dashboard/allproduct"), 1500);
       } else {
         setMessage(result.message);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setMessage("Server error");
     }
   };
@@ -80,28 +76,20 @@ function EditProduct() {
         <input
           type="number"
           placeholder="MRP"
-          {...register("MRP", {
-            required: "MRP is required",
-            min: { value: 1, message: "MRP must be at least 1" },
-          })}
+          {...register("MRP", { required: "MRP is required", min: 1 })}
         />
         {errors.MRP && <p>{errors.MRP.message}</p>}
 
         <input
           type="number"
           placeholder="Selling Price"
-          {...register("sellingPrice", {
-            required: "Selling price is required",
-            min: { value: 1, message: "Selling Price must be at least 1" },
-          })}
+          {...register("sellingPrice", { required: "Selling price is required", min: 1 })}
         />
         {errors.sellingPrice && <p>{errors.sellingPrice.message}</p>}
 
         {message && <p style={{ color: "black" }}>{message}</p>}
 
-        <button className="add-btn" type="submit">
-          Save Changes
-        </button>
+        <button className="add-btn" type="submit">Save Changes</button>
       </form>
     </div>
   );

@@ -21,7 +21,7 @@ function App() {
           <Route path="allproduct" element={<ProductList />} />
           <Route path="billhistory" element={<BillHistory />} />
           <Route path="addproduct" element={<AddProduct />} />
-          <Route path="editproduct" element={<EditProduct />} />
+          <Route path="editproduct/:id" element={<EditProduct />} />
         </Route>
       </Routes>
     </BrowserRouter>

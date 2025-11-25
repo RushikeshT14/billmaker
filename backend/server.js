@@ -84,12 +84,19 @@ app.post("/logout", (req, res) => {
   return res.json({ success: true, message: "Logged out successfully" });
 });
 
-// -----------------------------------------------------------------Product-------------
+// -----------------------------------------------------------------Product-------------------------------------
 
 app.get("/products", auth, async (req, res) => {
   try {
-    const products = await Product.find({});
-    // console.log(products);
+    let search = req.query.search || "";
+
+    const products = await Product.find({
+       $or: [
+    { productName: { $regex: search, $options: "i" } },
+    { category: { $regex: search, $options: "i" } }
+  ]
+
+    });
     res.json({
       success: true,
       message: "Data Found",
@@ -125,7 +132,22 @@ app.post("/addproduct", auth, async (req, res) => {
   }
 });
 
-app.put("/editproduct/:id", auth, async (req, res) => {
+app.get("/products/:id", auth, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ success: false, message: "Product not found" });
+    }
+    return res.json({ success: true, product });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+
+app.put("/products/:id", auth, async (req, res) => {
   try {
     const id = req.params.id;
     const editProduct = await Product.findById(id);
@@ -139,8 +161,7 @@ app.put("/editproduct/:id", auth, async (req, res) => {
     editProduct.productName = req.body.productName || editProduct.productName;
     editProduct.category = req.body.category || editProduct.category;
     editProduct.MRP = req.body.MRP || editProduct.MRP;
-    editProduct.sellingPrice =
-      req.body.sellingPrice || editProduct.sellingPrice;
+    editProduct.sellingPrice = req.body.sellingPrice || editProduct.sellingPrice;
 
     await editProduct.save();
     // console.log(editProduct);

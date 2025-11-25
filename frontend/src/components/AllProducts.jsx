@@ -5,22 +5,27 @@ import { useNavigate } from "react-router-dom";
 function AllProducts() {
   const [products, setProducts] = useState([]);
   const [deleteMsg, setDeleteMsg] = useState("");
+  const [search, setSearch] = useState("");
+
   const navigate = useNavigate();
 
   const editProduct = (product) => {
-    navigate("/dashboard/editproduct", { state: product });
+    navigate(`/dashboard/editproduct/${product._id}`);
   };
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:3000/products", {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await fetch(
+          `http://localhost:3000/products?search=${search}`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         const data = await res.json();
 
@@ -36,7 +41,7 @@ function AllProducts() {
     };
 
     fetchProducts();
-  }, []);
+  }, [search]);
 
   const deleteProduct = async (product) => {
     if (
@@ -71,9 +76,23 @@ function AllProducts() {
 
   return (
     <div className="all-products-container">
-      {deleteMsg && <span className="delete-message" style={{color:"#189595ff",fontSize:"15px"}}>{deleteMsg}</span>}
+      {deleteMsg && (
+        <span
+          className="delete-message"
+          style={{ color: "#189595ff", fontSize: "15px" }}
+        >
+          {deleteMsg}
+        </span>
+      )}
       <h2 className="title">All Products</h2>
-
+      <label className="search-wrapper">
+        <input
+          type="text"
+          placeholder="Search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </label>
       {products.length > 0 ? (
         <table className="products-table">
           <thead>
@@ -109,7 +128,7 @@ function AllProducts() {
           </tbody>
         </table>
       ) : (
-        <p>No products found.</p>
+        <p>Product not Found</p>
       )}
     </div>
   );

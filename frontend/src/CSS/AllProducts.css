@@ -70,3 +70,36 @@
   background-color: #ff0000;
 
 }
+
+
+.search-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap:15px;
+  margin-bottom: 55px;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+/* 
+.search-wrapper span {
+  font-size: 14px;
+  color: #333;
+  font-weight: 600;
+} */
+
+.search-wrapper input {
+  width: 70%;
+  background: #fafafa;
+  color: black;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.search-wrapper input:focus {
+  border-color: #888;
+}
