@@ -1,105 +1,71 @@
-.all-products-container {
-  padding: 20px;
-  width: 100%;
-  max-width: 1100px;
-  margin: auto;
-  font-family: Arial, sans-serif;
-}
-
-.all-products-container .productname {
-  text-align: left;
-}
-
-.title {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 28px;
-  font-weight: 600;
-  color: #333;
-}
 
 .products-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 15px;
+  font-size: 13px; 
 }
 
 .products-table th,
 .products-table td {
+  border: 1px solid #ccc;
+  padding: 6px 5px; 
   text-align: center;
-  border: 1px solid #ddd;
-  padding: 12px 10px;
 }
 
 .products-table th {
   background-color: #f3f3f3;
+  font-size: 13px;
   font-weight: 600;
-  color: #333;
 }
 
 .products-table tr:hover {
-  background-color: #fafafa;
+  background-color: #f9f9f9;
+}
+
+.products-table .productname {
+  text-align: left;
+  padding-left: 8px;
+}
+
+
+.edit-btn,
+.delete-btn {
+  padding: 6px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
 }
 
 .edit-btn {
-  padding: 6px 12px;
   background-color: #007bff;
   color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
 }
-
 .edit-btn:hover {
-  background-color: #0056b3;
+  background-color: #0058c7;
 }
 
 .delete-btn {
-  margin-left: 20px;
-  padding: 6px 12px;
-  background-color: #ff0000a9;
+  background-color: #ff4848;
   color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
+  margin-left: 6px;
 }
-
-.delete-btn:hover{
-  background-color: #ff0000;
-
+.delete-btn:hover {
+  background-color: #d70000;
 }
-
-
-.search-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap:15px;
-  margin-bottom: 55px;
-  width: 100%;
-  font-family: Arial, sans-serif;
-}
-/* 
-.search-wrapper span {
-  font-size: 14px;
-  color: #333;
-  font-weight: 600;
-} */
 
 .search-wrapper input {
-  width: 70%;
-  background: #fafafa;
-  color: black;
-  padding: 10px 12px;
+  width: 60%;
+  padding: 8px;   
+  font-size: 13px;
+  background: #f3f3f3;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s ease;
 }
 
-.search-wrapper input:focus {
-  border-color: #888;
+.all-products-container {
+  max-width: 1100px;
+  margin: auto;
+  font-family: Arial, sans-serif;
 }

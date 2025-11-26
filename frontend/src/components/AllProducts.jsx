@@ -6,7 +6,13 @@ function AllProducts() {
   const [products, setProducts] = useState([]);
   const [deleteMsg, setDeleteMsg] = useState("");
   const [search, setSearch] = useState("");
-
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
   const navigate = useNavigate();
 
   const editProduct = (product) => {
@@ -93,7 +99,7 @@ function AllProducts() {
           onChange={(e) => setSearch(e.target.value)}
         />
       </label>
-      {products.length > 0 ? (
+      {loading ? ( <p>Loading....</p> ) : products.length > 0 ? (
         <table className="products-table">
           <thead>
             <tr>
@@ -128,7 +134,7 @@ function AllProducts() {
           </tbody>
         </table>
       ) : (
-        <p>Product not Found</p>
+        <p style={{ color: "red" }}>Product not Found</p>
       )}
     </div>
   );
