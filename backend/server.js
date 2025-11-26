@@ -5,6 +5,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const User = require("./Schemas/AdminSchema.js");
 const Product = require("./Schemas/ProdectSchema.js");
+const Bill = require("./Schemas/BillSchema.js");
 const jwt = require("jsonwebtoken");
 const auth = require("./Middleware/authMiddleware.js");
 const cookieParser = require("cookie-parser");
@@ -91,11 +92,10 @@ app.get("/products", auth, async (req, res) => {
     let search = req.query.search || "";
 
     const products = await Product.find({
-       $or: [
-    { productName: { $regex: search, $options: "i" } },
-    { category: { $regex: search, $options: "i" } }
-  ]
-
+      $or: [
+        { productName: { $regex: search, $options: "i" } },
+        { category: { $regex: search, $options: "i" } },
+      ],
     });
     res.json({
       success: true,
@@ -137,7 +137,9 @@ app.get("/products/:id", auth, async (req, res) => {
     const id = req.params.id;
     const product = await Product.findById(id);
     if (!product) {
-      return res.status(404).json({ success: false, message: "Product not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Product not found" });
     }
     return res.json({ success: true, product });
   } catch (err) {
@@ -145,7 +147,6 @@ app.get("/products/:id", auth, async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
-
 
 app.put("/products/:id", auth, async (req, res) => {
   try {
@@ -161,7 +162,8 @@ app.put("/products/:id", auth, async (req, res) => {
     editProduct.productName = req.body.productName || editProduct.productName;
     editProduct.category = req.body.category || editProduct.category;
     editProduct.MRP = req.body.MRP || editProduct.MRP;
-    editProduct.sellingPrice = req.body.sellingPrice || editProduct.sellingPrice;
+    editProduct.sellingPrice =
+      req.body.sellingPrice || editProduct.sellingPrice;
 
     await editProduct.save();
     // console.log(editProduct);
@@ -194,6 +196,28 @@ app.delete("/products/:id", auth, async (req, res) => {
   } catch (err) {
     console.log(err);
     res.json({ success: false, message: "Server error" });
+  }
+});
+
+// --------------------------------------------------------------------BILLING-------------------------------------
+app.post("/bill", auth, async (req, res) => {
+  try {
+    const { clientName, address, contactNo, date, items, totalAmount } =
+      req.body;
+    const bill = new Bill({
+      clientName,
+      address,
+      contactNo,
+      date,
+      items,
+      totalAmount,
+    });
+    await bill.save();
+    return res.json({ success: true, message: "Bill saved" });
+  } catch (err) {
+    res.json({
+      success:false,
+      message:err.message  })
   }
 });
 

@@ -17,12 +17,44 @@ function Billing() {
   const [loading, setLoading] = useState(true);
   const [billItems, setBillItems] = useState([]);
 
-  const onSubmit = (data) => {
-    console.log(data.clientName);
-    console.log(data.address);
-    console.log(data.phoneNo);
-    console.log(data.date);
+  const onSubmit = async (data) => {
+    const convertedItems = billItems.map((item) => ({
+      productId: item._id,
+      productName: item.productName,
+      quantity: item.quantity,
+      sellingPrice: item.sellingPrice,
+      total: item.quantity * item.sellingPrice,
+    }));
+    let totalAmount = 0;
+    billItems.forEach((item) => {
+      totalAmount += item.quantity * item.sellingPrice;
+    });
+    let finalBill = {
+      clientName: data.clientName,
+      address: data.address,
+      contactNo: data.phoneNo,
+      date: data.date,
+      items: convertedItems,
+      totalAmount: totalAmount,
+    };
+    console.log(finalBill);
+
+    try {
+      const res = await fetch("http://localhost:3000/bill", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(finalBill),
+      });
+      const result = await res.json();
+      console.log("Bill saved:", result);
+    } catch (err) {
+      console.log("Error saving bill :", err);
+    }
   };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -63,7 +95,7 @@ function Billing() {
   const addBtnClickHandle = (item) => {
     setBillItems((prev) => {
       const updatedBill = [...prev];
-      console.log(updatedBill);
+      // console.log(updatedBill);
       let found = false;
       for (let i = 0; i < updatedBill.length; i++) {
         if (updatedBill[i]._id === item._id) {
@@ -106,21 +138,34 @@ function Billing() {
             type="text"
             placeholder="Client Name"
             {...register("clientName", { required: "Client name required" })}
-          />
-          {errors.clientName && <span>This field is required</span>}
-          <input
-            className="phoneno"
-            type="number"
-            placeholder="Contact Number"
-            {...register("phoneNo", { required: "Number required" })}
-          />
+          /> <br />
+          {errors.clientName && <span className="error">This field is required</span>}
           <input
             className="address"
             type="text"
             placeholder="Address"
             {...register("address", { required: "address required" })}
+          /> <br />
+          {errors.address && <span className="error">This field is required</span>}
+          <input
+            className="phoneno"
+            type="tel"
+            placeholder="Contact Number"
+            {...register("phoneNo", {
+              required: "Phone number is required",
+              minLength: {
+                value: 10,
+                message: "Phone number must be 10 digits",
+              },
+              maxLength: {
+                value: 10,
+                message: "Phone number must be 10 digits",
+              },
+            })}
           />
-          {errors.address && <span>This field is required</span>}
+          {errors.phoneNo && (
+            <span className="error">{errors.phoneNo.message}</span>
+          )}
           <input
             className="date"
             defaultValue={new Date().toISOString().slice(0, 10)}

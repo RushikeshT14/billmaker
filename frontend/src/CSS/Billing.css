@@ -18,7 +18,7 @@
 
 .bill-form .clientName,
 .bill-form .address {
-  width: 48%;
+  width: 58%;
   color: black;
 }
 
@@ -121,4 +121,11 @@
   border: 1px solid #aaa;
   border-radius: 4px;
   margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: -5px;
+  display: block;
 }
