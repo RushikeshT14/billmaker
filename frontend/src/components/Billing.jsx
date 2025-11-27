@@ -16,6 +16,8 @@ function Billing() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [billItems, setBillItems] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [finalBill, setFinalBill] = useState(null);
 
   const onSubmit = async (data) => {
     const convertedItems = billItems.map((item) => ({
@@ -25,20 +27,22 @@ function Billing() {
       sellingPrice: item.sellingPrice,
       total: item.quantity * item.sellingPrice,
     }));
-    let totalAmount = 0;
-    billItems.forEach((item) => {
-      totalAmount += item.quantity * item.sellingPrice;
-    });
-    let finalBill = {
+
+    const totalAmount = convertedItems.reduce((sum, p) => sum + p.total, 0);
+
+    const bill = {
       clientName: data.clientName,
       address: data.address,
       contactNo: data.phoneNo,
       date: data.date,
       items: convertedItems,
-      totalAmount: totalAmount,
+      totalAmount,
     };
-    console.log(finalBill);
 
+    setFinalBill(bill);
+    setShowPopup(true); 
+  };
+  const saveBillToDB = async () => {
     try {
       const res = await fetch("http://localhost:3000/bill", {
         method: "POST",
@@ -49,9 +53,11 @@ function Billing() {
         body: JSON.stringify(finalBill),
       });
       const result = await res.json();
-      console.log("Bill saved:", result);
+      // console.log("Bill saved:", result);
+      window.print();
+      setShowPopup(false);
     } catch (err) {
-      console.log("Error saving bill :", err);
+      console.log("Error saving bill:", err);
     }
   };
 
@@ -119,10 +125,83 @@ function Billing() {
       prev.map((item) => (item._id === id ? { ...item, quantity: qty } : item))
     );
   };
-
+  const closePopup = () => {
+    setShowPopup(false);
+  };
   return (
     <div className="all-bill-products-container">
-      {/* <h2 className="bill-title title">Add Products to Bill</h2> */}
+      {showPopup && finalBill && (
+        <div className="invoice-popup">
+          <div className="invoice-box">
+            <div className="invoice-header">
+              <div className="shop-info">
+                <h2>YOUR SHOP NAME</h2>
+                <p>Shop Address Line 1</p>
+                <p>Contact: 9876543210</p>
+              </div>
+              <div className="invoice-meta">
+                <p>
+                  <strong>Invoice No:</strong> ___________________
+                </p>
+                <p>
+                  <strong>Date:</strong> {finalBill.date}
+                </p>
+              </div>
+            </div>
+            <hr />
+            <div className="invoice-customer">
+              <h3>Customer Details</h3>
+              <p>
+                <strong>Name:</strong> {finalBill.clientName}
+              </p>
+              <p>
+                <strong>Address:</strong> {finalBill.address}
+              </p>
+              <p>
+                <strong>Phone:</strong> {finalBill.contactNo}
+              </p>
+            </div>
+            <table className="invoice-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Product</th>
+                  <th>Qty</th>
+                  <th>Price</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {billItems.map((item, idx) => (
+                  <tr key={item._id}>
+                    <td>{idx + 1}</td>
+                    <td>{item.productName}</td>
+                    <td>{item.quantity}</td>
+                    <td>{item.sellingPrice}</td>
+                    <td>{item.quantity * item.sellingPrice}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div className="invoice-total">
+              <p>
+                <strong>Total Amount:</strong> ₹{finalBill.totalAmount}
+              </p>
+            </div>
+
+            <div className="invoice-footer">
+              <p>Thank you for shopping with us!</p>
+            </div>
+
+            <div className="invoice-btns">
+              <button onClick={saveBillToDB}>Print</button>
+              <button onClick={closePopup}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <label className="search-wrapper">
         <input
           type="text"
@@ -132,21 +211,27 @@ function Billing() {
         />
       </label>
       <div className="bill-con">
-        <form onSubmit={handleSubmit(onSubmit)} className="bill-form">
+        <form onSubmit={handleSubmit(onSubmit)} className="bill-form" autoComplete="off">
           <input
             className="clientName"
             type="text"
             placeholder="Client Name"
             {...register("clientName", { required: "Client name required" })}
-          /> <br />
-          {errors.clientName && <span className="error">This field is required</span>}
+          />{" "}
+          <br />
+          {errors.clientName && (
+            <span className="error">This field is required</span>
+          )}
           <input
             className="address"
             type="text"
             placeholder="Address"
             {...register("address", { required: "address required" })}
-          /> <br />
-          {errors.address && <span className="error">This field is required</span>}
+          />{" "}
+          <br />
+          {errors.address && (
+            <span className="error">This field is required</span>
+          )}
           <input
             className="phoneno"
             type="tel"
@@ -173,7 +258,7 @@ function Billing() {
           />
           <br />
           <button className="create-bill" type="submit">
-            Create Bill
+            Preview Bill
           </button>
         </form>
         {billItems.length > 0 && (
