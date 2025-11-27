@@ -7,7 +7,6 @@ import AddProduct from "./components/AddProduct.jsx";
 import EditProduct from "./components/EditProduct.jsx";
 import Billing from "./components/Billing.jsx";
 import BillHistory from "./components/BillHistory.jsx";
-// import DashboardRightSilde from "./components/DashboardRightSide.jsx";
 import ProductList from "./components/AllProducts.jsx";
 
 function App() {

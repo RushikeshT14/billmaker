@@ -1,13 +1,13 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import "../CSS/Dashboard.css";
 import { useEffect } from "react";
-
+const API = import.meta.env.VITE_API_URL;
 function Dashboard() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      const res = await fetch("http://localhost:3000/logout", {
+      const res = await fetch(`${API}/logout`, {
         method: "POST",
         credentials: "include",
       });
@@ -23,7 +23,7 @@ function Dashboard() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("http://localhost:3000/checkauth", {
+        const res = await fetch(`${API}/checkauth`, {
           credentials: "include",
         });
 

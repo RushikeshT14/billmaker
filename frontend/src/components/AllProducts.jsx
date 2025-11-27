@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../CSS/AllProducts.css";
 import { useNavigate } from "react-router-dom";
-
+const API = import.meta.env.VITE_API_URL;
 function AllProducts() {
   const [products, setProducts] = useState([]);
   const [deleteMsg, setDeleteMsg] = useState("");
@@ -23,7 +23,7 @@ function AllProducts() {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3000/products?search=${search}`,
+          `${API}/products?search=${search}`,
           {
             method: "GET",
             credentials: "include",
@@ -57,7 +57,7 @@ function AllProducts() {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/products/${product._id}`, {
+      const res = await fetch(`${API}/products/${product._id}`, {
         method: "DELETE",
         credentials: "include",
         headers: {

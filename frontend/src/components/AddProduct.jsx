@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import "../CSS/AddProduct.css";
-
+const API = import.meta.env.VITE_API_URL;
 function AddProduct() {
   const {
     register,
@@ -14,7 +14,7 @@ function AddProduct() {
 
   const onSubmit = async (data) => {
     try {
-      const res = await fetch("http://localhost:3000/addproduct", {
+      const res = await fetch(`${API}/addproduct`, {
         method: "POST",
         credentials: "include",
         headers: {

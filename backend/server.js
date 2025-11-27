@@ -216,8 +216,48 @@ app.post("/bill", auth, async (req, res) => {
     return res.json({ success: true, message: "Bill saved" });
   } catch (err) {
     res.json({
-      success:false,
-      message:err.message  })
+      success: false,
+      message: err.message,
+    });
+  }
+});
+app.get("/allbills", auth, async (req, res) => {
+  try {
+    let search = req.query.search || "";
+
+    const bills = await Bill.find({
+      clientName: { $regex: search, $options: "i" },
+    }).sort({ createdAt: -1 });
+
+    return res.json({
+      success: true,
+      message: "Bills Found",
+      bills,
+    });
+  } catch (error) {
+    res.json({ success: false, message: "Server Error" });
+  }
+});
+app.delete("/allbills/:id", auth, async (req, res) => {
+  try {
+    const billId = req.params.id;
+
+    const deletedBill = await Bill.findByIdAndDelete(billId);
+
+    if (!deletedBill) {
+      return res.json({
+        success: false,
+        message: "Bill not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Bill deleted",
+      deletedBill,
+    });
+  } catch (error) {
+    res.json({ success: false, message: "Server Error" });
   }
 });
 

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "../CSS/Billing.css";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+const API = import.meta.env.VITE_API_URL;
 
 function Billing() {
   const {
@@ -44,7 +45,7 @@ function Billing() {
   };
   const saveBillToDB = async () => {
     try {
-      const res = await fetch("http://localhost:3000/bill", {
+      const res = await fetch(`${API}/bill`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -53,7 +54,6 @@ function Billing() {
         body: JSON.stringify(finalBill),
       });
       const result = await res.json();
-      // console.log("Bill saved:", result);
       window.print();
       setShowPopup(false);
     } catch (err) {
@@ -72,7 +72,7 @@ function Billing() {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3000/products?search=${search}`,
+          `${API}/products?search=${search}`,
           {
             method: "GET",
             credentials: "include",
@@ -101,7 +101,6 @@ function Billing() {
   const addBtnClickHandle = (item) => {
     setBillItems((prev) => {
       const updatedBill = [...prev];
-      // console.log(updatedBill);
       let found = false;
       for (let i = 0; i < updatedBill.length; i++) {
         if (updatedBill[i]._id === item._id) {

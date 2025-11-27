@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useParams, useNavigate } from "react-router-dom";
 import "../CSS/AddProduct.css";
+const API = import.meta.env.VITE_API_URL;
 
 function EditProduct() {
   const { id } = useParams();
@@ -13,7 +14,7 @@ function EditProduct() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/products/${id}`, {
+        const res = await fetch(`${API}/products/${id}`, {
           credentials: "include",
         });
         const data = await res.json();
@@ -39,7 +40,7 @@ function EditProduct() {
 
   const onSubmit = async (formData) => {
     try {
-      const res = await fetch(`http://localhost:3000/products/${id}`, {
+      const res = await fetch(`${API}/products/${id}`, {
         method: "PUT",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

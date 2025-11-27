@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+const API = import.meta.env.VITE_API_URL;
 function LoginPage() {
   const { register, handleSubmit, watch, formState: { errors },} = useForm();
 
@@ -7,7 +8,7 @@ function LoginPage() {
 
   const onSubmit = async (data) => {
     try {
-      const res = await fetch("http://localhost:3000/login", {
+      const res = await fetch(`${API}/login`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         credentials: "include",
