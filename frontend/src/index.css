@@ -14,4 +14,30 @@
 html, body {
   margin: 0;
   padding: 0;
+  min-height: 100%;
+}
+
+
+@media screen and (max-width: 480px) {
+  :root {
+    font-size: 14px; 
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  :root {
+    font-size: 15px; 
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    font-size: 16px; 
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    padding: 0 10px; 
+  }
 }

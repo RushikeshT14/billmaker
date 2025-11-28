@@ -240,3 +240,282 @@
 .invoice-customer h3 {
   margin-bottom: 5px;
 }
+
+
+
+
+@media screen and (max-width: 480px) {
+  .bill-con {
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .bill-title {
+    font-size: 16px;
+    margin-top: -10px;
+    margin-bottom: 4px;
+  }
+
+  .bill-form .phoneno,
+  .bill-form .date,
+  .bill-form .clientName,
+  .bill-form .address {
+    width: 100%;
+    margin-bottom: 6px;
+  }
+
+  .all-bill-products-container .products-table th,
+  .all-bill-products-container .products-table td {
+    padding: 2px 3px;
+    font-size: 11px;
+  }
+
+  .all-bill-products-container .qty-input {
+    width: 30px;
+    padding: 3px;
+    font-size: 12px;
+  }
+
+  .add-btn,
+  .remove-btn,
+  .create-bill {
+    padding: 6px 4px;
+    font-size: 12px;
+  }
+
+  .bill-form input {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+
+  .all-bill-products-container .search-wrapper input {
+    width: 100%;
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  .error {
+    font-size: 11px;
+  }
+
+  .invoice-box {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px;
+    border-radius: 6px;
+  }
+
+  .invoice-info, .invoice-customer {
+    font-size: 12px;
+  }
+
+  .invoice-table th,
+  .invoice-table td {
+    padding: 5px;
+    font-size: 11px;
+  }
+
+  .invoice-total {
+    font-size: 16px;
+  }
+
+  .invoice-footer {
+    font-size: 12px;
+  }
+
+  .invoice-btns {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .invoice-btns button {
+    width: 100%;
+    padding: 6px 0;
+    font-size: 12px;
+  }
+
+  .invoice-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .invoice-meta {
+    text-align: left;
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .bill-con {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .bill-title {
+    font-size: 18px;
+  }
+
+  .bill-form .phoneno,
+  .bill-form .date {
+    width: 48%;
+  }
+
+  .bill-form .clientName,
+  .bill-form .address {
+    width: 85%;
+    margin-bottom: 6px;
+  }
+
+  .all-bill-products-container .products-table th,
+  .all-bill-products-container .products-table td {
+    padding: 4px 5px;
+    font-size: 12px;
+  }
+
+  .all-bill-products-container .qty-input {
+    width: 34px;
+    padding: 3px;
+    font-size: 12px;
+  }
+
+  .add-btn,
+  .remove-btn,
+  .create-bill {
+    padding: 7px 5px;
+    font-size: 13px;
+  }
+
+  .bill-form input {
+    padding: 6px 9px;
+    font-size: 13px;
+  }
+
+  .all-bill-products-container .search-wrapper input {
+    width: 80%;
+    padding: 7px;
+    font-size: 13px;
+  }
+
+  .invoice-box {
+    width: 95%;
+    max-width: 650px;
+    padding: 18px;
+    border-radius: 7px;
+  }
+
+  .invoice-info, .invoice-customer {
+    font-size: 13px;
+  }
+
+  .invoice-table th,
+  .invoice-table td {
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  .invoice-total {
+    font-size: 17px;
+  }
+
+  .invoice-footer {
+    font-size: 13px;
+  }
+
+  .invoice-btns {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .invoice-btns button {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+
+  .invoice-header {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .invoice-meta {
+    font-size: 13px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .bill-con {
+    padding: 15px;
+  }
+
+  .bill-title {
+    font-size: 20px;
+  }
+
+  .bill-form .phoneno,
+  .bill-form .date {
+    width: 25%;
+  }
+
+  .bill-form .clientName,
+  .bill-form .address {
+    width: 70%;
+  }
+
+  .all-bill-products-container .products-table th,
+  .all-bill-products-container .products-table td {
+    padding: 5px;
+    font-size: 13px;
+  }
+
+  .all-bill-products-container .qty-input {
+    width: 38px;
+    padding: 4px;
+    font-size: 13px;
+  }
+
+  .add-btn,
+  .remove-btn,
+  .create-bill {
+    padding: 8px 6px;
+    font-size: 14px;
+  }
+
+  .bill-form input {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .all-bill-products-container .search-wrapper input {
+    width: 70%;
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .invoice-box {
+    width: 90%;
+    max-width: 700px;
+    padding: 20px;
+  }
+
+  .invoice-info, .invoice-customer {
+    font-size: 14px;
+  }
+
+  .invoice-table th,
+  .invoice-table td {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .invoice-total {
+    font-size: 18px;
+  }
+
+  .invoice-footer {
+    font-size: 14px;
+  }
+
+  .invoice-btns button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}

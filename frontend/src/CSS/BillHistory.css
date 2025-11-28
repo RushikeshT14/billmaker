@@ -54,3 +54,100 @@
   border: none;
   cursor: pointer;
 }
+
+
+@media screen and (max-width: 480px) {
+  .bill-history-container {
+    padding: 10px;
+  }
+
+  .search-bill {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .invoice-popup {
+    padding: 10px;
+  }
+
+  .invoice-box {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px;
+    border-radius: 6px;
+  }
+
+  .close-popup {
+    padding: 6px 16px;
+    font-size: 13px;
+  }
+
+  .view-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .bill-history-container {
+    padding: 15px;
+  }
+
+  .search-bill {
+    padding: 9px;
+    font-size: 15px;
+  }
+
+  .invoice-popup {
+    padding: 15px;
+  }
+
+  .invoice-box {
+    width: 95%;
+    max-width: 650px;
+    padding: 18px;
+    border-radius: 7px;
+  }
+
+  .close-popup {
+    padding: 7px 18px;
+    font-size: 14px;
+  }
+
+  .view-btn {
+    padding: 5px 11px;
+    font-size: 13px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .bill-history-container {
+    padding: 18px;
+  }
+
+  .search-bill {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  .invoice-popup {
+    padding: 18px;
+  }
+
+  .invoice-box {
+    width: 90%;
+    max-width: 700px;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .close-popup {
+    padding: 8px 20px;
+    font-size: 15px;
+  }
+
+  .view-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}

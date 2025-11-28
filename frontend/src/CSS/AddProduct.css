@@ -77,3 +77,86 @@
 .add-btn:active {
   transform: scale(0.97);
 }
+
+
+@media screen and (max-width: 480px) {
+  .add-product-container {
+    width: 95%;
+    padding: 10px;
+    flex-direction: column;
+  }
+
+  .add-product-container form {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .add-product-headline {
+    font-size: 18px;
+  }
+
+  .add-product-container input {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .add-btn {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .add-product-container {
+    width: 85%;
+    padding: 15px;
+  }
+
+  .add-product-container form {
+    width: 90%;
+    padding: 22px 25px;
+  }
+
+  .add-product-headline {
+    font-size: 20px;
+  }
+
+  .add-product-container input {
+    width: 95%;
+    padding: 9px 13px;
+    font-size: 15px;
+  }
+
+  .add-btn {
+    padding: 11px;
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .add-product-container {
+    width: 75%;
+    padding: 20px;
+  }
+
+  .add-product-container form {
+    width: 80%;
+    padding: 25px 28px;
+  }
+
+  .add-product-headline {
+    font-size: 21px;
+  }
+
+  .add-product-container input {
+    width: 92%;
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+
+  .add-btn {
+    padding: 12px;
+    font-size: 16px;
+  }
+}

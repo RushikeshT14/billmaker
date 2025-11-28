@@ -172,3 +172,175 @@ body {
   border-radius: 10px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
+
+
+@media screen and (max-width: 480px) {
+  .dashboard-main {
+    flex-direction: column; 
+  }
+
+  .sidebar {
+    width: 100%;           
+    flex-direction: row;  
+    justify-content: space-around;
+    overflow-x: auto;     
+    padding: 10px 0;
+    gap: 5px;
+  }
+
+  .sidebar-title {
+    display: none;         
+  }
+
+  .sidebar-links {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+  }
+
+  .sidebar-links li {
+    margin: 0;
+  }
+
+  .sidebar-links a {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+
+  .dashboard-content {
+    padding: 15px;
+    width: 100%;
+    height: auto;         
+  }
+
+  .top-navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  .logout-btn {
+    margin-top: 8px;
+    width: 100%;
+  }
+
+  .content-box {
+    padding: 15px;
+  }
+
+  .products-table,
+  .invoice-table {
+    font-size: 11px;
+  }
+
+  .products-table th,
+  .products-table td,
+  .invoice-table th,
+  .invoice-table td {
+    padding: 3px 4px;
+  }
+
+  .add-btn,
+  .remove-btn,
+  .create-bill,
+  .invoice-btns button {
+    font-size: 12px;
+    padding: 6px 4px;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .invoice-box {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px;
+    border-radius: 6px;
+  }
+  .invoice-btns {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .login-container form {
+    width: 80%;
+    padding: 2rem 1.8rem;
+  }
+  .admin-headline {
+    font-size: 1.7rem;
+  }
+  .login-container form input {
+    padding: 0.9rem;
+    font-size: 1rem;
+  }
+  .submit-btn {
+    padding: 0.9rem;
+    font-size: 1.05rem;
+  }
+
+  .dashboard-main {
+    flex-direction: row;
+  }
+  .sidebar {
+    width: 180px;
+    padding: 20px 15px;
+  }
+  .sidebar-title {
+    font-size: 20px;
+  }
+  .sidebar-links a {
+    font-size: 16px;
+    padding: 8px 12px;
+  }
+  .dashboard-content {
+    padding: 20px;
+  }
+  .top-navbar {
+    padding: 0 20px;
+    height: 55px;
+  }
+  .content-box {
+    padding: 20px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .login-container form {
+    width: 350px;
+    padding: 2.3rem 2rem;
+  }
+  .admin-headline {
+    font-size: 1.8rem;
+  }
+  .login-container form input {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  .submit-btn {
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .sidebar {
+    width: 220px;
+    padding: 22px 18px;
+  }
+  .sidebar-title {
+    font-size: 21px;
+  }
+  .sidebar-links a {
+    font-size: 17px;
+    padding: 9px 13px;
+  }
+  .dashboard-content {
+    padding: 22px;
+  }
+  .top-navbar {
+    padding: 0 22px;
+    height: 60px;
+  }
+  .content-box {
+    padding: 22px;
+  }
+}
