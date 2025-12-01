@@ -1,5 +1,5 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import "../CSS/Dashboard.css";
+import "../CSS/DashBoard.css";
 import { useEffect } from "react";
 const API = import.meta.env.VITE_API_URL;
 function Dashboard() {
