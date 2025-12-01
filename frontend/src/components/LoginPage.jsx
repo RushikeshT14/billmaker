@@ -33,13 +33,13 @@ function LoginPage() {
         <span className="admin-headline">ADMIN LOGIN</span>
         <input
           type="text"
-          placeholder="Username"
+          placeholder="Username [admin]"
           {...register("username", { required: "Username is required" })}
         />
         {errors.username && <div>{errors.username.message}</div>}
         <input
           type="password"
-          placeholder="Passward"
+          placeholder="Passward [1234]"
           {...register("password", { required: "passward is required" })}
         />
         {errors.password && <span>{errors.password.message}</span>}
