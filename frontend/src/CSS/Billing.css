@@ -45,6 +45,7 @@
 .all-bill-products-container .products-table th {
     font-size: 12px;
     font-weight: 600;
+    padding: 10px;
 }
 
 .all-bill-products-container .qty-input {
@@ -245,6 +246,9 @@
 
 
 @media screen and (max-width: 480px) {
+  .all-bill-products-container{
+    margin-bottom: 5rem;
+  }
   .bill-con {
     padding: 10px;
     border-radius: 10px;
@@ -260,7 +264,7 @@
   .bill-form .date,
   .bill-form .clientName,
   .bill-form .address {
-    width: 100%;
+    width: 85%;
     margin-bottom: 6px;
   }
 
@@ -281,6 +285,10 @@
   .create-bill {
     padding: 6px 4px;
     font-size: 12px;
+    width: 75px;
+  }
+  .create-bill{
+    width: 40%;
   }
 
   .bill-form input {
@@ -289,9 +297,10 @@
   }
 
   .all-bill-products-container .search-wrapper input {
-    width: 100%;
+    width: 65%;
     padding: 6px;
     font-size: 12px;
+    margin-left: -5rem;
   }
 
   .error {

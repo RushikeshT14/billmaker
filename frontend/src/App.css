@@ -16,15 +16,15 @@
 
   /* Login */
   .login-container form {
-    width: 90%;
-    padding: 2rem 1.5rem;
+    width: 225px !important;
+    padding: 2rem 1.5rem !important;
   }
   .admin-headline {
     font-size: 1.5rem;
   }
   .login-container form input {
-    padding: 0.8rem;
-    font-size: 0.95rem;
+    padding: 0.8rem !important;
+    font-size: 0.95rem !important;
   }
   .submit-btn {
     padding: 0.8rem;

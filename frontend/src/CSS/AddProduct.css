@@ -87,7 +87,8 @@
   }
 
   .add-product-container form {
-    width: 100%;
+    width: 85%;
+    margin-top: 10rem;
     padding: 20px;
   }
 
@@ -96,7 +97,7 @@
   }
 
   .add-product-container input {
-    width: 100%;
+    width: 90%;
     padding: 8px 12px;
     font-size: 14px;
   }

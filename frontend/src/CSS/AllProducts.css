@@ -88,22 +88,22 @@
 
   .edit-btn,
   .delete-btn {
-    padding: 4px 6px;
+    width: 45px;
+    margin-bottom: 3px;
     font-size: 10px;
+    margin-left: 0;
   }
 
   .search-wrapper input {
-    width: 100%;
+    width: 75%;
     padding: 6px;
     font-size: 12px;
   }
 
   .all-products-container {
-    padding: 0 10px;
-  }
-
-  .all-products-container {
+    /* padding: 0 10px; */
     overflow-x: auto;
+    margin-bottom: 5rem;
   }
 }
 
