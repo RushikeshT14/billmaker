@@ -99,7 +99,7 @@ function BillHistory() {
                   </button>
 
                   <button
-                    className="delete-btn"
+                    className="bill-delete-btn"
                     onClick={() => deleteBill(bill._id)}
                   >
                     Delete
