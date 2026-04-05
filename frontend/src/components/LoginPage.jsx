@@ -1,12 +1,14 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 const API = import.meta.env.VITE_API_URL;
 function LoginPage() {
   const { register, handleSubmit, watch, formState: { errors },} = useForm();
-
+  const [loading,setloading]=useState(false);
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    setloading(true);  
     try {
       const res = await fetch(`${API}/login`, {
         method: "POST",
@@ -25,6 +27,7 @@ function LoginPage() {
     } catch (err) {
       console.error("Error:", err);
     }
+    setloading(false);
   };
 
   return (
@@ -43,6 +46,8 @@ function LoginPage() {
           {...register("password", { required: "passward is required" })}
         />
         {errors.password && <span>{errors.password.message}</span>}
+        
+      {loading && <div className="loader"></div>}
         <button className="submit-btn" type="submit">
           Login
         </button>
