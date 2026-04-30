@@ -51,4 +51,8 @@ const BillSchema = new mongoose.Schema(
 
 BillSchema.index({ clientName: "text" });
 
+//auto delete after 1 year
+BillSchema.index({ createdAt: 1 }, { expireAfterSeconds: 31536000 });
+
+
 module.exports = mongoose.model("Bill", BillSchema);

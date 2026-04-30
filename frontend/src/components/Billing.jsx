@@ -32,6 +32,7 @@ function Billing() {
     const totalAmount = convertedItems.reduce((sum, p) => sum + p.total, 0);
 
     const bill = {
+      invoice: data.productId,
       clientName: data.clientName,
       address: data.address,
       contactNo: data.phoneNo,
@@ -41,7 +42,7 @@ function Billing() {
     };
 
     setFinalBill(bill);
-    setShowPopup(true); 
+    setShowPopup(true);
   };
   const saveBillToDB = async () => {
     try {
@@ -60,7 +61,68 @@ function Billing() {
       console.log("Error saving bill:", err);
     }
   };
+  const saveOnlyBill = async () => {
+    try {
+      const res = await fetch(`${API}/bill`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(finalBill),
+      });
+      const result = await res.json();
+      if (result.success) {
+        alert("Bill saved successfully!");
+        setShowPopup(false);
+      } else {
+        alert("Failed to save bill");
+      }
+    } catch (err) {
+      console.log("Error saving bill:", err);
+    }
+  };
 
+  const sendBillToWhatsApp = async () => {
+    try {
+      //  Save bill to DB first
+      const res = await fetch(`${API}/bill`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(finalBill),
+      });
+
+      const result = await res.json();
+
+      //. Format bill message
+      let message = ` *Invoice* ${finalBill.invoice}\n\n`;
+      message += ` Name: ${finalBill.clientName}\n`;
+      message += ` Phone: ${finalBill.contactNo}\n`;
+      message += ` Date: ${finalBill.date}\n\n`;
+
+      message += ` *Items:*\n`;
+
+      finalBill.items.forEach((item, index) => {
+        message += `${index + 1}. ${item.productName} x ${item.quantity} = ₹${item.total}\n`;
+      });
+
+      message += `\n *Total: ₹${finalBill.totalAmount}*\n`;
+      message += `\n Thank you!`;
+
+      //Encode message
+      const encodedMessage = encodeURIComponent(message);
+
+      //Open WhatsApp (use customer number)
+      const phone = finalBill.contactNo; // must be with country code if needed
+
+      window.open(`https://wa.me/91${phone}?text=${encodedMessage}`, "_blank");
+
+      setShowPopup(false);
+    } catch (err) {
+      console.log("Error sending bill:", err);
+    }
+  };
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -71,16 +133,13 @@ function Billing() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(
-          `${API}/products?search=${search}`,
-          {
-            method: "GET",
-            credentials: "include",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const res = await fetch(`${API}/products?search=${search}`, {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
         const data = await res.json();
 
@@ -121,7 +180,7 @@ function Billing() {
   };
   const updateQuantity = (id, qty) => {
     setBillItems((prev) =>
-      prev.map((item) => (item._id === id ? { ...item, quantity: qty } : item))
+      prev.map((item) => (item._id === id ? { ...item, quantity: qty } : item)),
     );
   };
   const closePopup = () => {
@@ -194,6 +253,8 @@ function Billing() {
             </div>
 
             <div className="invoice-btns">
+              <button onClick={saveOnlyBill}>Save</button>
+              <button onClick={sendBillToWhatsApp} className="SendBillToWhatsapp">Send on WhatsApp</button>
               <button onClick={saveBillToDB}>Print</button>
               <button onClick={closePopup}>Close</button>
             </div>
@@ -210,7 +271,11 @@ function Billing() {
         />
       </label>
       <div className="bill-con">
-        <form onSubmit={handleSubmit(onSubmit)} className="bill-form" autoComplete="off">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="bill-form"
+          autoComplete="off"
+        >
           <input
             className="clientName"
             type="text"
